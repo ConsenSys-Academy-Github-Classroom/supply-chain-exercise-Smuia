@@ -139,7 +139,7 @@ contract SupplyChain {
     checkValue(sku)
   {
     items[sku].seller.transfer(items[sku].price);
-    items[sku].buyer = msg.sender;
+    items[sku].buyer = payable(msg.sender);
     items[sku].state = State.Sold;
 
     emit LogSold(sku);
@@ -163,7 +163,7 @@ contract SupplyChain {
   // 3. Call the event associated with this function!
   function receiveItem(uint sku) 
   public shipped(sku) verifyCaller(items[sku].buyer) {
-    
+
     items[sku].state = State.Received;
     emit LogReceived(sku);
   }
